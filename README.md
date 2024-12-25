@@ -1,13 +1,4 @@
-# CodeX API
-
-![CodeX](https://cronitor.io/badges/H2ppWF/production/F7bEkD7FFEXp0uypGbzlGEUtkzk.svg)
-
-> This API is still in very early stages of development. So consider not using the API in production since things might change in the future.
-
-### Introducing the new CodeX API
-
-Here's how you can execute code in various languages on your own website for free (no, there's no fucking catch, it's literally free),
-
+## CodeX API
 ### Execute Code and fetch output
 
 #### `POST` /
@@ -49,7 +40,7 @@ var data = qs.stringify({
 });
 var config = {
     method: 'post',
-    url: 'https://api.codex.jaagrav.in',
+    url: 'https://localhost:8080',
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
     },
@@ -123,6 +114,12 @@ This endpoint allows you to list all languages supported and their versions.
 }
 ```
 
-> This API is deployed on a free instance on [choreo](https://choreo.dev/) so shoutout to @wso2 for providing a platform that helped bringing back the CodeX API after a long down time. Since I am using a free tier, the API might be slow sometimes, so please be patient while I try to fund this project.
-
-Happy hacking!
+```bash
+docker buildx build \
+--platform linux/amd64 \
+-t codex-api:amd64 \
+-f ./Dockerfile \
+--build-arg AUTH_TOKEN=MLSA_Advent_of_Code_2024 \
+--load \
+./
+```

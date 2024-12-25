@@ -1,0 +1,7 @@
+{
+    email admin@rycerz.es
+}
+
+codex.rycerz.es {
+    reverse_proxy api:8080
+}

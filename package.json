@@ -7,8 +7,8 @@
     "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Jaagrav Seal & MLSAKIIT",
-  "license": "ISC",
+  "author": "MLSAKIIT",
+  "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.18.1",

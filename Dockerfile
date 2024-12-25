@@ -1,10 +1,14 @@
 FROM ubuntu:18.04
 
 # Set environment variables
-ENV PYTHON_VERSION 3.7.7
-ENV PYTHON_PIP_VERSION 20.1
-ENV DEBIAN_FRONTEND noninteractive
-ENV NODE_VERSION 16
+ENV PYTHON_VERSION=3.7.7
+ENV PYTHON_PIP_VERSION=20.1
+ENV DEBIAN_FRONTEND=noninteractive
+ENV NODE_VERSION=16
+
+# Build-time argument for auth token
+ARG AUTH_TOKEN
+ENV AUTH_TOKEN=${AUTH_TOKEN}
 
 # Update and install dependencies, including Node 16 directly
 RUN apt-get update && apt-get -y install gcc mono-mcs golang-go \

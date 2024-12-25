@@ -12,6 +12,25 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
 
+const AUTH_TOKEN = process.env.AUTH_TOKEN;
+
+if (!AUTH_TOKEN) {
+    console.error('AUTH_TOKEN environment variable is not set');
+    process.exit(1);
+}
+
+const authMiddleware = (req, res, next) => {
+    const authHeader = req.headers.authorization;
+    
+    if (!authHeader || authHeader !== AUTH_TOKEN) {
+        return sendResponse(res, 401, { error: 'Unauthorized' });
+    }
+    
+    next();
+};
+
+app.use(authMiddleware);
+
 const sendResponse = (res, statusCode, body) => {
     const timeStamp = Date.now()
 
