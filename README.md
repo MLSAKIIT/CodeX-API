@@ -26,53 +26,6 @@ Whichever language you might mention in the language field, it would be automati
 | C# | cs |
 | NodeJS | js |
 
-More coming very soon!
-
-### NodeJS Example to Execute API Call?
-
-```js
-var axios = require('axios');
-var qs = require('qs');
-var data = qs.stringify({
-    'code': 'val = int(input("Enter your value: ")) + 5\nprint(val)',
-    'language': 'py',
-    'input': '7'
-});
-var config = {
-    method: 'post',
-    url: 'https://localhost:8080',
-    headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    data : data
-};
-
-axios(config)
-  .then(function (response) {
-    console.log(JSON.stringify(response.data));
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-```
-
-### Sample Output
-
-The output is a JSON object comprising only one parameter that is the output.
-
-```json
-{
-  "timeStamp": 1672439982964,
-  "status": 200,
-  "output": "Enter your value: 12\n",
-  "error": "",
-  "language": "py",
-  "info": "Python 3.6.9\n"
-}
-```
-
-> Since a lot of people had issues with executing the previous API from backend or serverless function, unlike the previous version of the API, this version of the API won't throw any Cross Origin errors so you can use this from the front end without any worries. Thank me later ;)
-
 #### `GET` /list
 
 This endpoint allows you to list all languages supported and their versions.
@@ -113,7 +66,13 @@ This endpoint allows you to list all languages supported and their versions.
   ]
 }
 ```
-
+### How to build and deploy
+#### Prerequisites
+```bash
+docker buildx create --name builder0 --use
+docker buildx inspect --bootstrap
+```
+#### Build command
 ```bash
 docker buildx build \
 --platform linux/amd64 \
@@ -123,3 +82,12 @@ docker buildx build \
 --load \
 ./
 ```
+#### Deploy with Docker compose
+```bash
+docker compose up -d
+```
+
+## TODO
+- [ ] Add more languages support
+- [ ] Upgrade to latest versions of compilers
+- [ ] Update Dockerfile

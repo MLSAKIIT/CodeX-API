@@ -19,6 +19,10 @@ if (!AUTH_TOKEN) {
     process.exit(1);
 }
 
+app.get('/healthcheck', (req, res) => {
+    sendResponse(res, 200, { status: 'healthy' });
+});
+
 const authMiddleware = (req, res, next) => {
     const authHeader = req.headers.authorization;
     
