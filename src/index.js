@@ -20,6 +20,10 @@ if (!AUTH_TOKEN) {
 }
 
 app.get('/healthcheck', (req, res) => {
+    console.log('[Request] GET /healthcheck', {
+        timestamp: new Date().toISOString(),
+        headers: req.headers
+    })
     sendResponse(res, 200, { status: 'healthy' });
 });
 
@@ -37,24 +41,47 @@ app.use(authMiddleware);
 
 const sendResponse = (res, statusCode, body) => {
     const timeStamp = Date.now()
-
-    res.status(statusCode).send({
+    const response = {
         timeStamp,
         status: statusCode,
         ...body
+    }
+    
+    console.log('[Response]', {
+        timestamp: new Date(timeStamp).toISOString(),
+        statusCode,
+        body: response
     })
+    
+    res.status(statusCode).send(response)
 }
 
 app.post("/", async (req, res) => {
+    console.log('[Request] POST /', {
+        timestamp: new Date().toISOString(),
+        body: req.body,
+        headers: req.headers
+    })
+    
     try {
         const output = await runCode(req.body)
         sendResponse(res, 200, output)
     } catch (err) {
+        console.error('[Error] POST /', {
+            timestamp: new Date().toISOString(),
+            error: err,
+            request: req.body
+        })
         sendResponse(res, err?.status || 500, err)
     }
 })
 
 app.get('/list', async (req, res) => {
+    console.log('[Request] GET /list', {
+        timestamp: new Date().toISOString(),
+        headers: req.headers
+    })
+    
     const body = []
 
     for(const language of supportedLanguages) {
